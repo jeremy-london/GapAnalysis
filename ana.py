@@ -1,23 +1,20 @@
 import logging
 
-from fastapi import APIRouter, Request
+from fastapi import APIRouter
 
 from phish_interface import request_linkedin_html
 
-logger = logging.getLogger('router')
+logger = logging.getLogger(__name__)
 
-router = APIRouter(
-    prefix="/mock",
-    tags=["mock"],
-    responses={404: {"description": "Not found"}},
-)
+router = APIRouter(prefix="/mock", tags=["mock"])
 
 
 @router.get("/fetch-linkedin-page/{url}")
-async def fetch_linkedin_page(request: Request, url: str):
+async def fetch_linkedin_page(url: str):
+    """Fetch LinkedIn page content."""
     return request_linkedin_html(url)
 
 
 @router.get("/welcome")
-async def welcome(request: Request):
-    return "Welcome"
+async def welcome():
+    return {"message": "Welcome"}

@@ -3,6 +3,9 @@ FROM python:3.11-bookworm
 
 SHELL ["/bin/bash", "-c"]
 
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+RUN . ~/.nvm/nvm.sh && nvm install 22
+
 # Set the working directory in the container to /app
 WORKDIR /app
 

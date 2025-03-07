@@ -1,5 +1,3 @@
-
-
 PAGE = '''<!DOCTYPE html>
 <html lang="en" class="theme theme--mercado app-loader--default artdeco windows"><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -1272,7 +1270,7 @@ definition.59306","$type":"com.linkedin.voyager.dash.segments.chameleon.Chameleo
 {"request":"/voyager/api/
 voyagerSegmentsDashChameleonConfig","status":200,"body":"bpr-
 guid-131025","method":"GET","headers":{"x-li-
-uuid":"AAYvtuTiNCPJYMdihYufzw\u003D\u003D"}}
+uuid":"AAYvtuTiNCPJYMdihYufzw\u003d\u003d"}}
 </code>
 <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="display: none" class="datalet-bpr-guid-131025"><code style="display: none" id="bpr-guid-131029">
   
@@ -1283,9 +1281,9 @@ uuid":"AAYvtuTiNCPJYMdihYufzw\u003D\u003D"}}
 <code style="display: none" id="datalet-bpr-guid-131029">
   
 {"request":"/voyager/api/premium/featureAccess?
-name\u003DreactivationFeaturesEligible","status":200,"body":"bpr-
+name\u003dreactivationFeaturesEligible","status":200,"body":"bpr-
 guid-131029","method":"GET","headers":{"x-li-
-uuid":"AAYvtuTiNCPJYMdihYufzw\u003D\u003D"}}
+uuid":"AAYvtuTiNCPJYMdihYufzw\u003d\u003d"}}
 </code>
 <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="display: none" class="datalet-bpr-guid-131029"><code style="display: none" id="bpr-guid-131031">
   
@@ -1321,7 +1319,7 @@ vassalli","trackingId":"uTFkKBoHQVafPfPtmZZ9Kw=="}]}
   
 {"request":"/voyager/api/me","status":200,"body":"bpr-
 guid-131031","method":"GET","headers":{"x-li-
-uuid":"AAYvtuTiNCPJYMdihYufzw\u003D\u003D"}}
+uuid":"AAYvtuTiNCPJYMdihYufzw\u003d\u003d"}}
 </code>
 <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="display: none" class="datalet-bpr-guid-131031"><code style="display: none" id="bpr-guid-131034">
   
@@ -2806,9 +2804,9 @@ AOzsz1OJKChFa0o=","elements":[],"paging":{"count":10,"start":0,"links":
 <code style="display: none" id="datalet-bpr-guid-131034">
   
 {"request":"/voyager/api/voyagerLaunchpadDashLaunchpadViews?
-decorationId\u003Dcom.linkedin.voyager.dash.deco.launchpad.LaunchpadView-92\u0026launchpadContext\u003DTAKEOVER\u0026q\u003Dcontext","status":200,"body":"bpr-
+decorationId\u003dcom.linkedin.voyager.dash.deco.launchpad.LaunchpadView-92\u0026launchpadContext\u003dTAKEOVER\u0026q\u003dcontext","status":200,"body":"bpr-
 guid-131034","method":"GET","headers":{"x-li-
-uuid":"AAYvtuTiNCPJYMdihYufzw\u003D\u003D"}}
+uuid":"AAYvtuTiNCPJYMdihYufzw\u003d\u003d"}}
 </code>
 <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="display: none" class="datalet-bpr-guid-131034"><code style="display: none" id="bpr-guid-131039">
   
@@ -3523,7 +3521,7 @@ Product","actionUrl":"http://www.linkedin.com/premium/products/?
 upsellOrderOrigin=Tracking%3Av1%3Apremium_nav_me_upsell%3ANav%3AIn-
 Product&amp;utype=job&amp;referenceId=3BvuEQbOQWaBywuJnqdb8Q%3D%3D&amp;isSS=false","controlName":"premium_nav_me_upsell_click","title":null,"cancelCta":null,"highlightedValues":null,"promotionLegoTrackingToken":null,"chameleonVariantId":"VAR_t64301_PR_1","funnelCommonHeader":
 {"utype":"job","$recipeTypes":
-["com.linkedin.f58e91c23e63f52ceb12bd0fab3eb07b"],"referenceId":"Ü\u001Bî\u0011\u0006ÎAfË\u000B§[ñ","$type":"com.linkedin.voyager.dash.premium.PremiumFunnelCommonHeader"},"fireDiscoveryImpressionEvent":false,"dismissible":false,"multiValuePropsContent":null,"layoutStyle":"TEXT_LINK","ctaButtonSecondaryEmphasizedTheme":false,"image":null,"socialProofInsight":null,"ctaText":
+["com.linkedin.f58e91c23e63f52ceb12bd0fab3eb07b"],"referenceId":"Ü\u001bî\u0011\u0006ÎAfË\u000b§[ñ","$type":"com.linkedin.voyager.dash.premium.PremiumFunnelCommonHeader"},"fireDiscoveryImpressionEvent":false,"dismissible":false,"multiValuePropsContent":null,"layoutStyle":"TEXT_LINK","ctaButtonSecondaryEmphasizedTheme":false,"image":null,"socialProofInsight":null,"ctaText":
 {"textDirection":"USER_LOCALE","text":"Try 1 month of Premium for 
 $0","attributesV2":[],"accessibilityTextAttributesV2":
 [],"accessibilityText":null,"$recipeTypes":
@@ -3533,9 +3531,9 @@ $0","attributesV2":[],"accessibilityTextAttributesV2":
 <code style="display: none" id="datalet-bpr-guid-131039">
   
 {"request":"/voyager/api/graphql?
-includeWebMetadata\u003Dtrue\u0026variables\u003D()\u0026queryId\u003DvoyagerFeedDashGlobalNavs.998834f8daa4cbca25417843e04f16b1","status":200,"body":"bpr-
+includeWebMetadata\u003dtrue\u0026variables\u003d()\u0026queryId\u003dvoyagerFeedDashGlobalNavs.998834f8daa4cbca25417843e04f16b1","status":200,"body":"bpr-
 guid-131039","method":"GET","headers":{"x-li-
-uuid":"AAYvtuTiNCPJYMdihYufzw\u003D\u003D"}}
+uuid":"AAYvtuTiNCPJYMdihYufzw\u003d\u003d"}}
 </code>
 <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="display: none" class="datalet-bpr-guid-131039"><code style="display: none" id="bpr-guid-131057">
   
@@ -3563,9 +3561,9 @@ uuid":"AAYvtuTiNCPJYMdihYufzw\u003D\u003D"}}
 <code style="display: none" id="datalet-bpr-guid-131057">
   
 {"request":"/voyager/api/graphql?
-includeWebMetadata\u003Dtrue\u0026variables\u003D(featureAccessTypes:List(CAN_ACCESS_SALES_NAV_BADGE,CAN_ACCESS_ADVERTISE_BADGE))\u0026queryId\u003DvoyagerPremiumDashFeatureAccess.c87b20dac35795f9920f2a8072fd7af5","status":200,"body":"bpr-
+includeWebMetadata\u003dtrue\u0026variables\u003d(featureAccessTypes:List(CAN_ACCESS_SALES_NAV_BADGE,CAN_ACCESS_ADVERTISE_BADGE))\u0026queryId\u003dvoyagerPremiumDashFeatureAccess.c87b20dac35795f9920f2a8072fd7af5","status":200,"body":"bpr-
 guid-131057","method":"GET","headers":{"x-li-
-uuid":"AAYvtuTiNCPJYMdihYufzw\u003D\u003D"}}
+uuid":"AAYvtuTiNCPJYMdihYufzw\u003d\u003d"}}
 </code>
 <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="display: none" class="datalet-bpr-guid-131057"><code style="display: none" id="bpr-guid-131061">
   
@@ -3585,7 +3583,7 @@ uuid":"AAYvtuTiNCPJYMdihYufzw\u003D\u003D"}}
 {"request":"/voyager/api/
 voyagerNotificationsDashBadgingItemCounts","status":200,"body":"bpr-
 guid-131061","method":"GET","headers":{"x-li-
-uuid":"AAYvtuTiNCPJYMdihYufzw\u003D\u003D"}}
+uuid":"AAYvtuTiNCPJYMdihYufzw\u003d\u003d"}}
 </code>
 <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="display: none" class="datalet-bpr-guid-131061"><code style="display: none" id="bpr-guid-131066">
   
@@ -4093,9 +4091,9 @@ Analytics","key":"en_US"}],"primaryLocale":
 <code style="display: none" id="datalet-bpr-guid-131066">
   
 {"request":"/voyager/api/graphql?
-includeWebMetadata\u003Dtrue\u0026variables\u003D(vanityName:jeremyclondon)\u0026queryId\u003DvoyagerIdentityDashProfiles.ee32334d3bd69a1900a077b5451c646a","status":200,"body":"bpr-
+includeWebMetadata\u003dtrue\u0026variables\u003d(vanityName:jeremyclondon)\u0026queryId\u003dvoyagerIdentityDashProfiles.ee32334d3bd69a1900a077b5451c646a","status":200,"body":"bpr-
 guid-131066","method":"GET","headers":{"x-li-
-uuid":"AAYvtuTiNCPJYMdihYufzw\u003D\u003D"}}
+uuid":"AAYvtuTiNCPJYMdihYufzw\u003d\u003d"}}
 </code>
 <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="display: none" class="datalet-bpr-guid-131066"><code style="display: none" id="clientPageInstance">
   urn:li:page:d_flagship3_profile_view_base;fb13e9ed-9612-4cd4-985c-9170a0a4e71e

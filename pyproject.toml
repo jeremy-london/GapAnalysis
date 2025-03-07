@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "llm-kg"
+name = "gap-analysis"
 version = "0.1.0"
 description = "Generating kg with llm"
 readme = "README.md"

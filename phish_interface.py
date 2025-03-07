@@ -1,26 +1,31 @@
 from openai import OpenAI
 import requests
 import logging
-from jeremy_linkedin import PAGE as PAGE_JEREMY
-from james_linkedin import PAGE as PAGE_JAMES
+from jeremy_linkedin import PAGE as LINKEDIN_JEREMY
+from james_linkedin import PAGE as LINKEDIN_JAMES
+from home_james import HOME as HOME_JAMES
+from home_jeremy import HOME as HOME_JEREMY
 from difflib import unified_diff
 from bs4 import BeautifulSoup
 from typing import Sequence, List
 client = OpenAI()
 
+target_linkedin_dict = {'jeremy':LINKEDIN_JEREMY, 'james': LINKEDIN_JAMES}
+target_homepage_dict = {'jeremy':HOME_JEREMY, 'james': HOME_JAMES}
+
 logger = logging.getLogger("phish_interface")
 
 EXAMPLE_INTRO = '''<p>Hi Jeremy,</p><p>I hope you're well. We are in the process of finalizing our upcoming marketing materials and would greatly value your feedback. Your expertise in AI and innovative solutions would be incredibly beneficial in ensuring our content is both impactful and technically sound. Your input would be greatly appreciated.</p>'''
 
-EXAMPLE_MATERIAL = '''<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Keeper Security: Secure Your Digital Life</title>\n    <style>\n        body {\n            font-family: Arial, sans-serif;\n            background-color: #f5f5f5;\n            margin: 0;\n            padding: 0;\n        }\n        .email-container {\n            max-width: 600px;\n            margin: 0 auto;\n            background-color: #ffffff;\n            padding: 20px;\n            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);\n        }\n        .header {\n            background-color: #000000;\n            color: #ffffff;\n            text-align: center;\n            padding: 20px;\n        }\n        .header h1 {\n            margin: 0;\n            font-size: 24px;\n        }\n        .content {\n            padding: 20px;\n            text-align: center;\n        }\n        .content h2 {\n            font-size: 20px;\n            color: #333333;\n        }\n        .content p {\n            font-size: 16px;\n            color: #666666;\n            line-height: 1.5;\n        }\n        .button {\n            display: inline-block;\n            background-color: #FFD700;\n            color: #000000;\n            padding: 10px 20px;\n            text-decoration: none;\n            margin-top: 20px;\n            border-radius: 5px;\n        }\n        .footer {\n            background-color: #000000;\n            color: #ffffff;\n            text-align: center;\n            padding: 10px;\n            font-size: 12px;\n        }\n        .footer a {\n            color: #FFD700;\n            text-decoration: none;\n        }\n    </style>\n</head>\n<body>\n    <div class=\"email-container\">\n        <div class=\"header\">\n            <h1>Keeper Security</h1>\n        </div>\n        <div class=\"content\">\n            <h2>Secure Your Digital Life</h2>\n            <p>Every few seconds, a person or organization falls victim to ransomware. Protect yourself and your loved ones with Keeper's advanced security solutions.</p>\n            <p>Get started with the trusted AI-enabled cybersecurity platform to prevent data breaches and manage passwords securely.</p>\n            <a href=\"https://www.keepersecurity.com\" class=\"button\">Learn More</a>\n        </div>\n        <div class=\"footer\">\n            &copy; 2025 Keeper Security, Inc. All rights reserved. <br>\n            <a href=\"https://www.keepersecurity.com/privacy\">Privacy Policy</a> | <a href=\"https://www.keepersecurity.com/terms\">Terms of Service</a>\n        </div>\n    </div>\n</body>\n</html>'''
+EXAMPLE_MATERIAL = '''<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <title>Keeper Security: Secure Your Digital Life</title>\n    <style>\n        body {\n            font-family: Arial, sans-serif;\n            background-color: #f5f5f5;\n            margin: 0;\n            padding: 0;\n        }\n        .email-container {\n            max-width: 600px;\n            margin: 0 auto;\n            background-color: #ffffff;\n            padding: 20px;\n            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);\n        }\n        .header {\n            background-color: #000000;\n            color: #ffffff;\n            text-align: center;\n            padding: 20px;\n        }\n        .header h1 {\n            margin: 0;\n            font-size: 24px;\n        }\n        .content {\n            padding: 20px;\n            text-align: center;\n        }\n        .content h2 {\n            font-size: 20px;\n            color: #333333;\n        }\n        .content p {\n            font-size: 16px;\n            color: #666666;\n            line-height: 1.5;\n        }\n        .button {\n            display: inline-block;\n            background-color: #FFD700;\n            color: #000000;\n            padding: 10px 20px;\n            text-decoration: none;\n            margin-top: 20px;\n            border-radius: 5px;\n        }\n        .footer {\n            background-color: #000000;\n            color: #ffffff;\n            text-align: center;\n            padding: 10px;\n            font-size: 12px;\n        }\n        .footer a {\n            color: #FFD700;\n            text-decoration: none;\n        }\n    </style>\n</head>\n<body>\n    <div class="email-container">\n        <div class="header">\n            <h1>Keeper Security</h1>\n        </div>\n        <div class="content">\n            <h2>Secure Your Digital Life</h2>\n            <p>Every few seconds, a person or organization falls victim to ransomware. Protect yourself and your loved ones with Keeper's advanced security solutions.</p>\n            <p>Get started with the trusted AI-enabled cybersecurity platform to prevent data breaches and manage passwords securely.</p>\n            <a href="http://localhost:8000/docs" class="button">Learn More</a>\n        </div>\n        <div class="footer">\n            &copy; 2025 Keeper Security, Inc. All rights reserved. <br>\n            <a href="http://localhost:8000/docs">Privacy Policy</a> | <a href="http://localhost:8000/docs">Terms of Service</a>\n        </div>\n    </div>\n</body>\n</html>'''
 
 MAKE_EMAIL_RESPONSE = '''The user will provide a corporate webpage in html. Respond with html for a marketing email inspired by the page. Use a similar comms strategy.
 
 Here is an example response  
-<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Keeper Security: Secure Your Digital Life</title>\n    <style>\n        body {\n            font-family: Arial, sans-serif;\n            background-color: #f5f5f5;\n            margin: 0;\n            padding: 0;\n        }\n        .email-container {\n            max-width: 600px;\n            margin: 0 auto;\n            background-color: #ffffff;\n            padding: 20px;\n            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);\n        }\n        .header {\n            background-color: #000000;\n            color: #ffffff;\n            text-align: center;\n            padding: 20px;\n        }\n        .header h1 {\n            margin: 0;\n            font-size: 24px;\n        }\n        .content {\n            padding: 20px;\n            text-align: center;\n        }\n        .content h2 {\n            font-size: 20px;\n            color: #333333;\n        }\n        .content p {\n            font-size: 16px;\n            color: #666666;\n            line-height: 1.5;\n        }\n        .button {\n            display: inline-block;\n            background-color: #FFD700;\n            color: #000000;\n            padding: 10px 20px;\n            text-decoration: none;\n            margin-top: 20px;\n            border-radius: 5px;\n        }\n        .footer {\n            background-color: #000000;\n            color: #ffffff;\n            text-align: center;\n            padding: 10px;\n            font-size: 12px;\n        }\n        .footer a {\n            color: #FFD700;\n            text-decoration: none;\n        }\n    </style>\n</head>\n<body>\n    <div class=\"email-container\">\n        <div class=\"header\">\n            <h1>Keeper Security</h1>\n        </div>\n        <div class=\"content\">\n            <h2>Secure Your Digital Life</h2>\n            <p>Every few seconds, a person or organization falls victim to ransomware. Protect yourself and your loved ones with Keeper's advanced security solutions.</p>\n            <p>Get started with the trusted AI-enabled cybersecurity platform to prevent data breaches and manage passwords securely.</p>\n            <a href=\"https://www.keepersecurity.com\" class=\"button\">Learn More</a>\n        </div>\n        <div class=\"footer\">\n            &copy; 2025 Keeper Security, Inc. All rights reserved. <br>\n            <a href=\"https://www.keepersecurity.com/privacy\">Privacy Policy</a> | <a href=\"https://www.keepersecurity.com/terms\">Terms of Service</a>\n        </div>\n    </div>\n</body>\n</html>'''
+<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <title>Keeper Security: Secure Your Digital Life</title>\n    <style>\n        body {\n            font-family: Arial, sans-serif;\n            background-color: #f5f5f5;\n            margin: 0;\n            padding: 0;\n        }\n        .email-container {\n            max-width: 600px;\n            margin: 0 auto;\n            background-color: #ffffff;\n            padding: 20px;\n            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);\n        }\n        .header {\n            background-color: #000000;\n            color: #ffffff;\n            text-align: center;\n            padding: 20px;\n        }\n        .header h1 {\n            margin: 0;\n            font-size: 24px;\n        }\n        .content {\n            padding: 20px;\n            text-align: center;\n        }\n        .content h2 {\n            font-size: 20px;\n            color: #333333;\n        }\n        .content p {\n            font-size: 16px;\n            color: #666666;\n            line-height: 1.5;\n        }\n        .button {\n            display: inline-block;\n            background-color: #FFD700;\n            color: #000000;\n            padding: 10px 20px;\n            text-decoration: none;\n            margin-top: 20px;\n            border-radius: 5px;\n        }\n        .footer {\n            background-color: #000000;\n            color: #ffffff;\n            text-align: center;\n            padding: 10px;\n            font-size: 12px;\n        }\n        .footer a {\n            color: #FFD700;\n            text-decoration: none;\n        }\n    </style>\n</head>\n<body>\n    <div class="email-container">\n        <div class="header">\n            <h1>Keeper Security</h1>\n        </div>\n        <div class="content">\n            <h2>Secure Your Digital Life</h2>\n            <p>Every few seconds, a person or organization falls victim to ransomware. Protect yourself and your loved ones with Keeper's advanced security solutions.</p>\n            <p>Get started with the trusted AI-enabled cybersecurity platform to prevent data breaches and manage passwords securely.</p>\n            <a href="https://www.keepersecurity.com" class="button">Learn More</a>\n        </div>\n        <div class="footer">\n            &copy; 2025 Keeper Security, Inc. All rights reserved. <br>\n            <a href="https://www.keepersecurity.com/privacy">Privacy Policy</a> | <a href="https://www.keepersecurity.com/terms">Terms of Service</a>\n        </div>\n    </div>\n</body>\n</html>'''
 
 
-def get_email_html(hompage_html:str)->str:
+def complete_email_html(hompage_html:str)->str:
     completion = client.chat.completions.create(
       model="gpt-4o",
       messages=[
@@ -54,7 +59,7 @@ def get_email_html(hompage_html:str)->str:
     )
     return completion.choices[0].message.content
 
-def get_target_heading(linkedin_context:str):
+def complete_target_heading(linkedin_context:str):
     completion = client.chat.completions.create(
       model="gpt-4o",
       messages=[
@@ -109,21 +114,29 @@ def filtered_diff(a, b, lineterm=''):
         if filter_for_additions(line):
             yield line.replace('+','')
 
-def request_linkedin_html(url:str)->str:
-    soupJames = BeautifulSoup(PAGE_JAMES, "html.parser")
-    soupJeremy = BeautifulSoup(PAGE_JEREMY, "html.parser")
-    lines_james = remove_junk_lines(soupJames.get_text().split('\n'))
+def request_linkedin_html(target_name:str)->str:
+    soupTarget = BeautifulSoup(target_linkedin_dict[target_name], "html.parser")
+    soupJeremy = BeautifulSoup(LINKEDIN_JEREMY, "html.parser")
+    lines_target = remove_junk_lines(soupTarget.get_text().split('\n'))
     lines_jeremy = remove_junk_lines(soupJeremy.get_text().split('\n'))
     profile_summary = []
-    for line in filtered_diff(lines_james,lines_jeremy,lineterm=''):
+    for line in filtered_diff(lines_target,lines_jeremy,lineterm=''):
         profile_summary.append(line)
     return '\n'.join(profile_summary)
 
-def create_bait()->str:
-    return combine_marketing_material_with_intro(EXAMPLE_MATERIAL,EXAMPLE_INTRO)
+def create_bait(target_name:str)->str:
+    return combine_marketing_material_with_intro(
+        complete_email_html(target_homepage_dict[target_name]),
+        complete_target_heading(request_linkedin_html(target_name))
+    )
 
 def create_marketing_material_iframe(marketing_material:str)->str:
-    return f'<iframe id="myIframe" width="100%" height="500px"></iframe><script>const embeddedHTML = `{marketing_material}`;const iframe = document.getElementById("myIframe");const doc = iframe.contentWindow.document;doc.open();doc.write(embeddedHTML);doc.close();</script>'
+    return ''.join([
+        '<iframe id="myIframe" width="100%" height="500px"></iframe><script>const embeddedHTML = `',
+        marketing_material.replace("\n",""),
+        '`;const iframe = document.getElementById("myIframe");const doc = iframe.contentWindow.document;doc.open();doc.write(embeddedHTML);doc.close();</script>'])
 
 def combine_marketing_material_with_intro(marketing_material:str,intro:str)->str:
-    return f'<!DOCTYPE html><html><body>{intro}{create_marketing_material_iframe(marketing_material)}</body></html>'
+    combined =  f'<!DOCTYPE html><html><body>{intro}{create_marketing_material_iframe(marketing_material)}</body></html>'
+    logger.warning(combined)
+    return combined

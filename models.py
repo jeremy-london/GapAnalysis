@@ -13,8 +13,8 @@ class Bait(BaitBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
 
 class Sender(str, Enum):
-    HUMAN = "human"
-    AI = "ai"
+    HUMAN = "user"
+    AI = "assistant"
 
 class ChatHistoryBase(SQLModel):
     message: str = Field(nullable=False)
@@ -23,12 +23,14 @@ class ChatHistoryBase(SQLModel):
     created_at: datetime = Field(default_factory=datetime.utcnow, sa_column=Column(DateTime(timezone=True), nullable=False))
 
     def get_message_dict(self):
-        sender_for_message = self.sender
         return {
-            "type": sender_for_message,
-            "data": {
-                        "content": self.message or ""
-                    },
+            "role": self.sender,
+            "content": [
+                {
+                    "type": "text",
+                    "text": self.message
+                }
+            ]
         }
 
 class ChatHistory(ChatHistoryBase, table=True):

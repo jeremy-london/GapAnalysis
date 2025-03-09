@@ -8,7 +8,7 @@ from phish_interface import (
     request_linkedin_html,
     target_homepage_dict,
 )
-from interview_interface import begin_interview
+from interview_interface import begin_interview, continue_interview
 from typing import List
 from sqlmodel import delete, select
 logger = logging.getLogger('router')
@@ -60,3 +60,17 @@ async def start_chat(request: Request, bait_id: int) -> str:
         session.add(first_ai_chat)
         session.commit()
         return first_ai_response
+    
+@router.post("/add-chat/{bait_id}/{user_message}")
+async def start_chat(request: Request, bait_id: int, user_message:str) -> str:
+    db: Database = request.app.state.db
+    with db.get_session() as session:
+        old_chats:List[ChatHistory] = session.query(ChatHistory).where(ChatHistory.bait_id==bait_id).all()
+        new_user_chat: ChatHistory = ChatHistory(message=user_message, sender=Sender.HUMAN, bait_id=bait_id)
+        session.add(new_user_chat)
+        old_chats.append(new_user_chat)
+        new_ai_message = continue_interview(old_chats)
+        new_ai_chat: ChatHistory = ChatHistory(message=new_ai_message,sender=Sender.AI,bait_id=bait_id)
+        session.add(new_ai_chat)
+        session.commit()
+        return new_ai_message

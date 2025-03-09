@@ -1,20 +1,13 @@
-from typing import List
+from typing import Optional
 
-from pydantic import BaseModel
-
-
-class Entity(BaseModel):
-    id: int
-    name: str
-    summary: str
-    sources: List[str]
+from sqlmodel import SQLModel, Field
 
 
-class Relationship(BaseModel):
-    id: int
-    name: str
-    start_entity_name: str
-    start_entity_id: int
-    end_entity_name: str
-    end_entity_id: int
-    summary: str
+class BaitBase(SQLModel):
+    name: str = Field(nullable=False)
+    content: str = Field(nullable=False)
+
+class Bait(BaitBase, table=True):
+    __tablename__ = "bait"
+    __table_args__ = {"extend_existing": True}
+    id: Optional[int] = Field(default=None, primary_key=True)

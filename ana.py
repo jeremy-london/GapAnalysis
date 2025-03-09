@@ -1,7 +1,7 @@
 import logging
-
+from db import Database
 from fastapi import APIRouter, Request
-
+from models import Bait
 from phish_interface import (
     complete_email_html,
     create_bait,
@@ -25,7 +25,14 @@ async def fetch_linkedin_page(request: Request, url: str):
 
 @router.get("/bait/{target_name}")
 async def bait(request: Request, target_name: str):
-    return create_bait(target_name)
+    content = create_bait(target_name)
+    db: Database = request.app.state.db
+    with db.get_session() as session:
+        bait = Bait(name=target_name,content=content)
+        session.add(bait)
+        session.commit()
+        session.refresh(bait)
+        return {bait.id: bait.content}
 
 
 @router.get("/email-html/{target_name}")
